@@ -4,6 +4,7 @@ using Hotels.Application.Interfaces;
 using Hotels.Application.Queries;
 using Hotels.SharedKernel;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace Hotels.Application.Handlers
 {
@@ -11,35 +12,41 @@ namespace Hotels.Application.Handlers
     {
         private readonly IPropertyRepository _repository;
         private readonly IMapper _mapper;
+        private readonly ILogger<GetPropertiesHandler> _logger;
 
-    public GetPropertiesHandler(IPropertyRepository repository, IMapper mapper)
+        public GetPropertiesHandler(IPropertyRepository repository, IMapper mapper, ILogger<GetPropertiesHandler> logger)
         {
             _repository = repository;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<Result<IEnumerable<PropertyDto>>> Handle(GetPropertiesQuery request, CancellationToken cancellationToken)
         {
-            var properties = await _repository.GetAllPropertiesAsync();
-
-            var propertyDtos = new List<PropertyDto>();
-
-            foreach (var property in properties)
+            try
             {
-                // Mapeo base
-                var dto = _mapper.Map<PropertyDto>(property);
+                _logger.LogInformation("Fetching all properties...");
 
-                // Obtener los traces de la propiedad
-                var traces = await _repository.GetPropertyTracesAsync(property.IdProperty);
+                var properties = await _repository.GetAllPropertiesAsync();
+                var propertyDtos = new List<PropertyDto>();
 
-                // Mapear los traces al DTO correspondiente
-                dto.Traces = _mapper.Map<IEnumerable<PropertyTraceDto>>(traces);
+                foreach (var property in properties)
+                {
+                    var dto = _mapper.Map<PropertyDto>(property);
+                    var traces = await _repository.GetPropertyTracesAsync(property.IdProperty);
 
-                propertyDtos.Add(dto);
+                    dto.Traces = _mapper.Map<IEnumerable<PropertyTraceDto>>(traces);
+                    propertyDtos.Add(dto);
+                }
+
+                _logger.LogInformation("Fetched {Count} properties successfully.", propertyDtos.Count);
+                return Result<IEnumerable<PropertyDto>>.Success(propertyDtos);
             }
-
-            return Result<IEnumerable<PropertyDto>>.Success(propertyDtos);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while fetching properties.");
+                return Result<IEnumerable<PropertyDto>>.Failure("Error fetching properties");
+            }
         }
     }
-
 }

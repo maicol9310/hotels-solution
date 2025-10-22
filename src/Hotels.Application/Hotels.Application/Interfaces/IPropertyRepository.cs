@@ -6,5 +6,12 @@ namespace Hotels.Application.Interfaces
     {
         Task<IEnumerable<Property>> GetAllPropertiesAsync();
         Task<Property?> GetPropertyByIdAsync(string id);
+
+        Task AddPropertyAsync(Property property);
+        Task<Owner?> GetOwnerByIdAsync(string id);
+
+        // Traces
+        Task<IEnumerable<PropertyTrace>> GetPropertyTracesAsync(string propertyId);
+        Task AddPropertyTraceAsync(PropertyTrace trace);
     }
 }

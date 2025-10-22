@@ -1,10 +1,9 @@
-﻿using Hotels.Application.DTOs;
+﻿using Hotels.Application.Commands;
 using Hotels.Application.Queries;
-using Hotels.SharedKernel;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Hotels.Api.Controllers
+namespace Hotels.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -20,21 +19,25 @@ namespace Hotels.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            Result<IEnumerable<PropertyDto>> result = await _mediator.Send(new GetPropertiesQuery());
-            if (!result.IsSuccess)
-                return BadRequest(result.Error);
-
+            var result = await _mediator.Send(new GetPropertiesQuery());
+            if (!result.IsSuccess) return BadRequest(result.Error);
             return Ok(result.Value);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(string id)
         {
-            Result<PropertyDto> result = await _mediator.Send(new GetPropertyByIdQuery(id));
-            if (!result.IsSuccess)
-                return NotFound(result.Error);
-
+            var result = await _mediator.Send(new GetPropertyByIdQuery(id));
+            if (!result.IsSuccess) return NotFound(result.Error);
             return Ok(result.Value);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] CreatePropertyCommand cmd)
+        {
+            var result = await _mediator.Send(cmd);
+            if (!result.IsSuccess) return BadRequest(result.Error);
+            return CreatedAtAction(nameof(GetById), new { id = result.Value!.IdProperty }, result.Value);
         }
     }
 }

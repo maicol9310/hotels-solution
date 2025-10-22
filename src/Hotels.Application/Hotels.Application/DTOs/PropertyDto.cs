@@ -10,5 +10,6 @@
         public int Year { get; set; }
         public OwnerDto Owner { get; set; } = new OwnerDto();
         public string? ImageFile { get; set; }
+        public IEnumerable<PropertyTraceDto>? Traces { get; set; }
     }
 }

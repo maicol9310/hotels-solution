@@ -1,18 +1,22 @@
-﻿namespace Hotels.Domain.Entities
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
+namespace Hotels.Domain.Entities
 {
     public class Property
     {
-        public string IdProperty { get; private set; } = string.Empty;
-        public string Name { get; private set; } = string.Empty;
-        public string Address { get; private set; } = string.Empty;
-        public decimal Price { get; private set; }
-        public string CodeInternal { get; private set; } = string.Empty;
-        public int Year { get; private set; }
-        public string IdOwner { get; private set; } = string.Empty;
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; } = string.Empty; // _id de MongoDB
 
-        public Owner? Owner { get; private set; }
-        public PropertyImage? Image { get; private set; }
+        public string IdProperty { get; set; } = string.Empty; // tu ID de negocio
 
-        public Property() { }
+        public string Name { get; set; } = string.Empty;
+        public string Address { get; set; } = string.Empty;
+        public decimal Price { get; set; }
+        public string CodeInternal { get; set; } = string.Empty;
+        public int Year { get; set; }
+        public Owner? Owner { get; set; }
+        public PropertyImage? Image { get; set; }
     }
 }

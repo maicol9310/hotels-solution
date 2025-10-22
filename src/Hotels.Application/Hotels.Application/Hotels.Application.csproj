@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Hotels.Domain\Hotels.Domain\Hotels.Domain.csproj" />
+    <ProjectReference Include="..\..\Hotels.SharedKernel\Hotels.SharedKernel\Hotels.SharedKernel.csproj" />
   </ItemGroup>
 
 </Project>

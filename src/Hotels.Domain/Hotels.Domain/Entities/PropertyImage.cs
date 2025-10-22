@@ -2,10 +2,10 @@
 {
     public class PropertyImage
     {
-        public string IdPropertyImage { get; private set; } = string.Empty;
-        public string IdProperty { get; private set; } = string.Empty;
-        public string File { get; private set; } = string.Empty;
-        public bool Enabled { get; private set; }
+        public string IdPropertyImage { get; set; } = string.Empty;
+        public string IdProperty { get; set; } = string.Empty;
+        public string File { get; set; } = string.Empty;
+        public bool Enabled { get; set; }
 
         public PropertyImage() { }
     }

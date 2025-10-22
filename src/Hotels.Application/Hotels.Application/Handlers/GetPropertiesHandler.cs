@@ -1,11 +1,12 @@
 ﻿using Hotels.Application.DTOs;
 using Hotels.Application.Interfaces;
 using Hotels.Application.Queries;
+using Hotels.SharedKernel;
 using MediatR;
 
 namespace Hotels.Application.Handlers
 {
-    public class GetPropertiesHandler : IRequestHandler<GetPropertiesQuery, IEnumerable<PropertyDto>>
+    public class GetPropertiesHandler : IRequestHandler<GetPropertiesQuery, Result<IEnumerable<PropertyDto>>>
     {
         private readonly IPropertyRepository _repository;
 
@@ -14,11 +15,11 @@ namespace Hotels.Application.Handlers
             _repository = repository;
         }
 
-        public async Task<IEnumerable<PropertyDto>> Handle(GetPropertiesQuery request, CancellationToken cancellationToken)
+        public async Task<Result<IEnumerable<PropertyDto>>> Handle(GetPropertiesQuery request, CancellationToken cancellationToken)
         {
             var properties = await _repository.GetAllPropertiesAsync();
 
-            return properties.Select(p => new PropertyDto
+            var dtos = properties.Select(p => new PropertyDto
             {
                 IdProperty = p.IdProperty,
                 Name = p.Name,
@@ -26,7 +27,7 @@ namespace Hotels.Application.Handlers
                 Price = p.Price,
                 CodeInternal = p.CodeInternal,
                 Year = p.Year,
-                Owner = p.Owner == null ? new OwnerDto() : new OwnerDto
+                Owner = p.Owner == null ? new Hotels.Application.DTOs.OwnerDto() : new Hotels.Application.DTOs.OwnerDto
                 {
                     IdOwner = p.Owner.IdOwner,
                     Name = p.Owner.Name,
@@ -35,6 +36,8 @@ namespace Hotels.Application.Handlers
                 },
                 ImageFile = p.Image?.File
             });
+
+            return Result<IEnumerable<PropertyDto>>.Success(dtos);
         }
     }
 }

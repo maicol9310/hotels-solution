@@ -1,6 +1,7 @@
 ﻿using Hotels.Application.Commands;
 using Hotels.Application.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hotels.API.Controllers
@@ -16,7 +17,8 @@ namespace Hotels.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [AllowAnonymous]
+        [HttpGet("public")]
         public async Task<IActionResult> GetAll()
         {
             var result = await _mediator.Send(new GetPropertiesQuery());
@@ -24,6 +26,7 @@ namespace Hotels.API.Controllers
             return Ok(result.Value);
         }
 
+        [Authorize(Policy = "RequireAdmin")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(string id)
         {
@@ -32,6 +35,7 @@ namespace Hotels.API.Controllers
             return Ok(result.Value);
         }
 
+        [Authorize(Policy = "RequireAdmin")]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreatePropertyCommand cmd)
         {

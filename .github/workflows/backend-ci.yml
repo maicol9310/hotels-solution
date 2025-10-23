@@ -1,6 +1,5 @@
 name: Backend CI
 
-# Se ejecuta en pushes o pull requests hacia main o master
 on:
   push:
     branches: [ main, master ]
@@ -16,28 +15,40 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    # 2️⃣ Instalar .NET 8 SDK
+    # 2️⃣ Setup .NET 8 SDK
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 8.0.x
 
-    # 3️⃣ Restaurar dependencias
-    - name: Restore dependencies
-      run: dotnet restore src
+    # 3️⃣ Restaurar todas las soluciones del backend
+    - name: Restore Backend Solutions
+      run: |
+        dotnet restore src/Hotels.Api.sln
+        dotnet restore src/Hotels.Application.sln
+        dotnet restore src/Hotels.Domain.sln
+        dotnet restore src/Hotels.Infrastructure.sln
+        dotnet restore src/Hotels.SharedKernel.sln
 
-    # 4️⃣ Build del proyecto
-    - name: Build
-      run: dotnet build src --no-restore --configuration Release
+    # 4️⃣ Build de todas las soluciones del backend
+    - name: Build Backend Solutions
+      run: |
+        dotnet build src/Hotels.Api.sln --no-restore --configuration Release
+        dotnet build src/Hotels.Application.sln --no-restore --configuration Release
+        dotnet build src/Hotels.Domain.sln --no-restore --configuration Release
+        dotnet build src/Hotels.Infrastructure.sln --no-restore --configuration Release
+        dotnet build src/Hotels.SharedKernel.sln --no-restore --configuration Release
 
-    # 5️⃣ Ejecutar tests con NUnit
+    # 5️⃣ Preparar carpeta de resultados de tests
     - name: Prepare TestResults folder
       run: mkdir -p src/tests/Hotels.Application.Tests/TestResults
 
-    - name: Run tests
+    # 6️⃣ Ejecutar tests NUnit
+    - name: Run Application Tests
       working-directory: src/tests/Hotels.Application.Tests
-      run: dotnet test Hotels.Application.Tests.csproj --no-build --verbosity normal --logger "trx;LogFileName=TestResults/test-results.trx"
+      run: dotnet test Hotels.Application.Tests.sln --no-build --verbosity normal --logger "trx;LogFileName=TestResults/test-results.trx"
 
+    # 7️⃣ Subir resultados de tests
     - name: Upload test results
       if: always()
       uses: actions/upload-artifact@v4

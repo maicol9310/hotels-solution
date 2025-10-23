@@ -31,14 +31,16 @@ jobs:
       run: dotnet build src --no-restore --configuration Release
 
     # 5️⃣ Ejecutar tests con NUnit
-    - name: Run tests
-      run: dotnet test src/tests/Hotels.Application.Tests/Hotels.Application.Tests.csproj --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx"
+    - name: Prepare TestResults folder
+      run: mkdir -p src/tests/Hotels.Application.Tests/TestResults
 
-    # 6️⃣ Subir resultados de tests
+    - name: Run tests
+      run: dotnet test src/tests/Hotels.Application.Tests/Hotels.Application.Tests.csproj --no-build --verbosity normal --logger "trx;LogFileName=src/tests/Hotels.Application.Tests/TestResults/test-results.trx"
+
     - name: Upload test results
       if: always()
       uses: actions/upload-artifact@v4
       with:
         name: test-results
-        path: src/tests/Hotels.Application.Tests/TestResults/
+        path: src/tests/Hotels.Application.Tests/TestResults/test-results.trx
 

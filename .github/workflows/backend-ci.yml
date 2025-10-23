@@ -35,7 +35,8 @@ jobs:
       run: mkdir -p src/tests/Hotels.Application.Tests/TestResults
 
     - name: Run tests
-      run: dotnet test src/tests/Hotels.Application.Tests/Hotels.Application.Tests.csproj --no-build --verbosity normal --logger "trx;LogFileName=src/tests/Hotels.Application.Tests/TestResults/test-results.trx"
+      working-directory: src/tests/Hotels.Application.Tests
+      run: dotnet test Hotels.Application.Tests.csproj --no-build --verbosity normal --logger "trx;LogFileName=TestResults/test-results.trx"
 
     - name: Upload test results
       if: always()

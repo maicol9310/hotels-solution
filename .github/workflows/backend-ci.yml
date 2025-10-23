@@ -37,7 +37,8 @@ jobs:
     # 6️⃣ Subir resultados de tests
     - name: Upload test results
       if: always()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: test-results
         path: src/tests/Hotels.Application.Tests/TestResults/
+

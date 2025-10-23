@@ -1,0 +1,43 @@
+name: Backend CI
+
+# Se ejecuta en pushes o pull requests hacia main o master
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1️⃣ Checkout del repositorio
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # 2️⃣ Instalar .NET 8 SDK
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 8.0.x
+
+    # 3️⃣ Restaurar dependencias
+    - name: Restore dependencies
+      run: dotnet restore src
+
+    # 4️⃣ Build del proyecto
+    - name: Build
+      run: dotnet build src --no-restore --configuration Release
+
+    # 5️⃣ Ejecutar tests con NUnit
+    - name: Run tests
+      run: dotnet test src/tests/Hotels.Application.Tests/Hotels.Application.Tests.csproj --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx"
+
+    # 6️⃣ Subir resultados de tests
+    - name: Upload test results
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results
+        path: src/tests/Hotels.Application.Tests/TestResults/

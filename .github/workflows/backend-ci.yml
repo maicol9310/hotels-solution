@@ -46,7 +46,7 @@ jobs:
     # 6️⃣ Ejecutar tests NUnit
     - name: Run Application Tests
       working-directory: src/tests/Hotels.Application.Tests
-      run: dotnet test Hotels.Application.Tests.sln --no-build --verbosity normal --logger "trx;LogFileName=TestResults/test-results.trx"
+      run: dotnet test Hotels.Application.Tests/Hotels.Application.Tests.csproj --no-build --verbosity normal --logger "trx;LogFileName=TestResults/test-results.trx"
 
     # 7️⃣ Subir resultados de tests
     - name: Upload test results

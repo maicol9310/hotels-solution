@@ -24,20 +24,20 @@ jobs:
     # 3️⃣ Restaurar todas las soluciones del backend
     - name: Restore Backend Solutions
       run: |
-        dotnet restore src/Hotels.Api.sln
-        dotnet restore src/Hotels.Application.sln
-        dotnet restore src/Hotels.Domain.sln
-        dotnet restore src/Hotels.Infrastructure.sln
-        dotnet restore src/Hotels.SharedKernel.sln
+        dotnet restore src/Hotels.Api/Hotels.Api.sln
+        dotnet restore src/Hotels.Application/Hotels.Application.sln
+        dotnet restore src/Hotels.Domain/Hotels.Domain.sln
+        dotnet restore src/Hotels.Infrastructure/Hotels.Infrastructure.sln
+        dotnet restore src/Hotels.SharedKernel/Hotels.SharedKernel.sln
 
     # 4️⃣ Build de todas las soluciones del backend
     - name: Build Backend Solutions
       run: |
-        dotnet build src/Hotels.Api.sln --no-restore --configuration Release
-        dotnet build src/Hotels.Application.sln --no-restore --configuration Release
-        dotnet build src/Hotels.Domain.sln --no-restore --configuration Release
-        dotnet build src/Hotels.Infrastructure.sln --no-restore --configuration Release
-        dotnet build src/Hotels.SharedKernel.sln --no-restore --configuration Release
+        dotnet build src/Hotels.Api/Hotels.Api.sln --no-restore --configuration Release
+        dotnet build src/Hotels.Application/Hotels.Application.sln --no-restore --configuration Release
+        dotnet build src/Hotels.Domain/Hotels.Domain.sln --no-restore --configuration Release
+        dotnet build src/Hotels.Infrastructure/Hotels.Infrastructure.sln --no-restore --configuration Release
+        dotnet build src/Hotels.SharedKernel/Hotels.SharedKernel.sln --no-restore --configuration Release
 
     # 5️⃣ Preparar carpeta de resultados de tests
     - name: Prepare TestResults folder
@@ -55,4 +55,3 @@ jobs:
       with:
         name: test-results
         path: src/tests/Hotels.Application.Tests/TestResults/test-results.trx
-

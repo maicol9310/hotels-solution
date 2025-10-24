@@ -168,7 +168,7 @@ El repositorio incluye flujos en `.github/workflows/` para:
 **Jan Michael Sánchez**
 Desarrollador de software especializado en soluciones distribuidas, arquitectura limpia y desarrollo web fullstack.
 
-📧 **Contacto:** [[tu_correo@ejemplo.com](mailto:tu_correo@ejemplo.com)]
+📧 **Contacto:** [[maicol_931028@hotmail.com](mailto:maicol_931028@hotmail.com)]
 🌐 **GitHub:** [@maicol9310](https://github.com/maicol9310)
 
 ---

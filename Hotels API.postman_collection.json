@@ -1,0 +1,138 @@
+{
+	"info": {
+		"_postman_id": "7cecaafb-7c8f-480d-bbc0-20c33c15d12f",
+		"name": "Hotels API",
+		"description": "Colección Postman para probar los endpoints de Hotels.API con autenticación JWT",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13173329",
+		"_collection_link": "https://blue-space-932435.postman.co/workspace/e2dea4d1-33af-40f8-94d9-14f1c9df4d26/collection/13173329-7cecaafb-7c8f-480d-bbc0-20c33c15d12f?action=share&source=collection_link&creator=13173329"
+	},
+	"item": [
+		{
+			"name": "Login (Obtener Token JWT)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"admin\",\n    \"role\": \"Admin\"\n}"
+				},
+				"url": {
+					"raw": "https://localhost:7283/login?username=Admin&role=Admin",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7283",
+					"path": [
+						"login"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "Admin"
+						},
+						{
+							"key": "role",
+							"value": "Admin"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAll (Público)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7283/api/properties/public",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7283",
+					"path": [
+						"api",
+						"properties",
+						"public"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetById (Admin)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://localhost:7283/api/properties/{{property_id}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7283",
+					"path": [
+						"api",
+						"properties",
+						"{{property_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Property (Admin)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"idProperty\": \"P03\",\n  \"name\": \"Casa en el Poblado\",\n  \"street\": \"Calle 10 #45-23\",\n  \"city\": \"Medellín\",\n  \"country\": \"Colombia\",\n  \"price\": 1250000000,\n  \"codeInternal\": \"CP-2025\",\n  \"year\": 2024,\n  \"ownerId\": \"O3\",\n  \"imageFile\": \"https://example.com/casa-poblado.jpg\"\n}\n"
+				},
+				"url": {
+					"raw": "https://localhost:7283/api/properties",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7283",
+					"path": [
+						"api",
+						"properties"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "jwt_token",
+			"value": ""
+		}
+	]
+}

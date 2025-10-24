@@ -20,6 +20,18 @@ BsonSerializer.RegisterSerializer(typeof(Address), new AddressSerializer());
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocalhost3000",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:3000") // tu frontend Next.js
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
+
 // Load settings
 var mongoSettings = builder.Configuration.GetSection("MongoDbSettings").Get<MongoDbSettings>();
 if (mongoSettings == null)
@@ -84,6 +96,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+app.UseCors("AllowLocalhost3000");
 // Seed
 using (var scope = app.Services.CreateScope())
 {

@@ -18,23 +18,23 @@ namespace Hotels.Infrastructure.Seed
             new Owner
             {
                 IdOwner = "O1",
-                Name = "Carlos Pérez",
+                Name = "Yesica Pérez",
                 Address = "Cra 45 #23-10, Medellín",
-                Photo = "https://example.com/photos/carlos.jpg"
+                Photo = "https://cdn.pixabay.com/photo/2019/02/11/20/20/woman-3990680_1280.jpg"
             },
             new Owner
             {
                 IdOwner = "O2",
-                Name = "María Fernanda Gómez",
+                Name = "Angie Gómez",
                 Address = "Av. 9 #14-55, Cali",
-                Photo = "https://example.com/photos/maria.jpg"
+                Photo = "https://cdn.pixabay.com/photo/2016/11/29/13/14/attractive-1869761_1280.jpg"
             },
             new Owner
             {
                 IdOwner = "O3",
                 Name = "Jhonatan Rodríguez",
                 Address = "Cll 85 #12-40, Bogotá",
-                Photo = "https://example.com/photos/jhonatan.jpg"
+                Photo = "https://cdn.pixabay.com/photo/2019/05/21/09/09/people-4218644_1280.jpg"
             }
         };
 
@@ -46,19 +46,19 @@ namespace Hotels.Infrastructure.Seed
             new PropertyImage
             {
                 IdPropertyImage = "IMG1",
-                File = "https://example.com/images/apto_medellin.jpg",
+                File = "https://cdn.pixabay.com/photo/2019/08/19/13/58/bed-4416515_1280.jpg",
                 Enabled = true
             },
             new PropertyImage
             {
                 IdPropertyImage = "IMG2",
-                File = "https://example.com/images/casa_cali.jpg",
+                File = "https://cdn.pixabay.com/photo/2016/10/18/09/02/hotel-1749602_1280.jpg",
                 Enabled = true
             },
             new PropertyImage
             {
                 IdPropertyImage = "IMG3",
-                File = "https://example.com/images/finca_bogota.jpg",
+                File = "https://cdn.pixabay.com/photo/2016/03/28/09/34/bedroom-1285156_1280.jpg",
                 Enabled = true
             }
         };

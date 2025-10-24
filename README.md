@@ -173,4 +173,10 @@ Desarrollador de software especializado en soluciones distribuidas, arquitectura
 
 ---
 
+![Frontend Next](docs/images/image1.png)
 
+![Frontend Next](docs/images/image2.png)
+
+![Swagger](docs/images/image3.png)
+
+![DBMongo - ATLAS](docs/images/image4.png)

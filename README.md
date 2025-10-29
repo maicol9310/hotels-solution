@@ -98,23 +98,6 @@ El sistema implementa **autenticación y autorización basada en JWT Bearer**, c
 ```csharp
 [Authorize(Policy = "RequireAdmin")]
 public IActionResult SecureEndpoint() => Ok("Acceso concedido");
-
-## 🧠 Principios de Diseño
-
-* **DDD (Domain Driven Design)** → separación clara entre dominio, aplicación, infraestructura y presentación.
-* **CQRS (Command Query Responsibility Segregation)** → comandos y consultas gestionados por `MediatR`.
-* **SOLID Principles** → código modular, testeable y escalable.
-* **Clean Architecture** → independencia de frameworks y persistencia.
-
-## ⚙️ Configuración y Ejecución
-
-### 🧩 Backend (.NET 8)
-
-```bash
-cd Hotels.Api
-dotnet restore
-dotnet build
-dotnet run
 ```
 
 Accede a la API en:
